@@ -3,15 +3,24 @@ import { nanoid } from 'nanoid';
 import Container from './AppStyle';
 import ContactList from 'components/contacts/ContactList';
 import Section from 'components/section/Section';
+import Filter from 'components/Filter';
 
 class App extends Component {
   state = {
     contacts: [],
+    filter: '',
     name: '',
     number: '',
   };
+
+  // contact = (name, number) => {
+  //   id: nanoid(),
+  //     name,
+  //     number    
+  // }
+
   contactId = nanoid();
-  
+
   handleSubmit = e => {
     e.preventDefault();
     const { contacts, name, number } = this.state;
@@ -27,7 +36,16 @@ class App extends Component {
     this.setState(prevState => ({ ...prevState, [name]: value }));
   };
 
+  handleFilter = ({ target }) => {
+    this.setState(prevState => ({ ...prevState, filter: target.value }));
+  };
+
   render() {
+    const { contacts, filter } = this.state;
+    const normalizeFilter = filter.toLowerCase();
+    const visibleContacts = contacts.filter(contact =>
+      contact.name.toLowerCase().includes(normalizeFilter)
+    );
     return (
       <Container>
         <Section title="Phonebook">
@@ -53,7 +71,9 @@ class App extends Component {
             <button type="submit">Add contact</button>
           </form>
         </Section>
-        <ContactList contacts={this.state.contacts} />
+        <Filter filter={filter} changeFilter={this.handleFilter}
+        />
+        <ContactList contacts={visibleContacts} />
       </Container>
     );
   }
