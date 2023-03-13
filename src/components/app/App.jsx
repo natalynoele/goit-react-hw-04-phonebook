@@ -1,39 +1,37 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import Container from './AppStyle';
-import ContactList from 'components/contacts/ContactList';
-import Section from 'components/section/Section';
+import Container from './App_Style';
+import ContactList from 'components/contactsList/ContactList';
 import Filter from 'components/Filter';
+import ContactForm from 'components/contactForm/ContactForm';
 
 class App extends Component {
   state = {
-    contacts: [],
+    contacts: [
+      { id: 'id-1', name: 'Rosie Simpson', number: '459-12-56' },
+      { id: 'id-2', name: 'Hermione Kline', number: '443-89-12' },
+      { id: 'id-3', name: 'Eden Clements', number: '645-17-79' },
+      { id: 'id-4', name: 'Annie Copeland', number: '227-91-26' },
+    ],
     filter: '',
-    name: '',
-    number: '',
   };
 
-  // contact = (name, number) => {
-  //   id: nanoid(),
-  //     name,
-  //     number    
-  // }
-
-  contactId = nanoid();
-
-  handleSubmit = e => {
-    e.preventDefault();
-    const { contacts, name, number } = this.state;
+  addContact = (name, number) => {
+    const contact = {
+      id: nanoid(),
+      name,
+      number,
+    };
     this.setState(prevState => ({
       ...prevState,
-      contacts: [{ id: nanoid(), name: name, number: number }, ...contacts],
+      contacts: [contact, ...prevState.contacts],
     }));
-    e.target.reset();
   };
 
-  handleChange = ({ target }) => {
-    const { name, value } = target;
-    this.setState(prevState => ({ ...prevState, [name]: value }));
+  deleteContact = contactId => {
+    this.setState(prevState => ({
+      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
+    }));
   };
 
   handleFilter = ({ target }) => {
@@ -42,38 +40,18 @@ class App extends Component {
 
   render() {
     const { contacts, filter } = this.state;
+    console.log(filter);
     const normalizeFilter = filter.toLowerCase();
     const visibleContacts = contacts.filter(contact =>
       contact.name.toLowerCase().includes(normalizeFilter)
     );
     return (
       <Container>
-        <Section title="Phonebook">
-          <form onSubmit={this.handleSubmit}>
-            <label htmlFor="name">Name</label>
-            <input
-              type="text"
-              name="name"
-              pattern="^[a-zA-Zа-яА-Я]+(([' -][a-zA-Zа-яА-Я ])?[a-zA-Zа-яА-Я]*)*$"
-              title="Name may contain only letters, apostrophe, dash and spaces. For example Adrian, Jacob Mercer, Charles de Batz de Castelmore d'Artagnan"
-              required
-              onChange={this.handleChange}
-            />
-            <label htmlFor="number">Number</label>
-            <input
-              type="tel"
-              name="number"
-              pattern="\+?\d{1,4}?[-.\s]?\(?\d{1,3}?\)?[-.\s]?\d{1,4}[-.\s]?\d{1,4}[-.\s]?\d{1,9}"
-              title="Phone number must be digits and can contain spaces, dashes, parentheses and can start with +"
-              required
-              onChange={this.handleChange}
-            />
-            <button type="submit">Add contact</button>
-          </form>
-        </Section>
-        <Filter filter={filter} changeFilter={this.handleFilter}
-        />
-        <ContactList contacts={visibleContacts} />
+        <h1>Phonebook</h1>
+        <ContactForm onSubmit={this.addContact} />
+        <h2>Contacts</h2>
+        <Filter value={normalizeFilter} changeFilter={this.handleFilter} />
+        <ContactList contacts={visibleContacts} onDeleteContact={ this.deleteContact} />
       </Container>
     );
   }

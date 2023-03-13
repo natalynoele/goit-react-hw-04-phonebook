@@ -1,4 +1,4 @@
-const Filter = ({ filter, changeFilter }) => {
+const Filter = ({ value, changeFilter }) => {
   return (
     <>
       <label htmlFor="filter">Find contact by name</label>
@@ -6,7 +6,7 @@ const Filter = ({ filter, changeFilter }) => {
         type="text"
         name="filter"
         title="Write down a word for searching"
-        value={filter}
+        value={value}
         onChange={changeFilter}
       />
     </>
