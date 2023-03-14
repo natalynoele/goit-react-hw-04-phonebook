@@ -1,5 +1,4 @@
 import { titleCase } from 'components/helper';
-import Notification from 'components/Notification';
 
 const ContactList = ({ contacts, onDeleteContact }) => (
   <ul>
