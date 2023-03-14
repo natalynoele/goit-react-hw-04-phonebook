@@ -1,29 +1,23 @@
 import { titleCase } from 'components/helper';
+import Notification from 'components/Notification';
+import { Button } from 'components/contactForm/ContactForm_Style';
+import { Span, Item } from './ContactList_Style';
 
-const ContactList = ({ contacts, onDeleteContact }) => (
-  <ul>
-    {contacts.map(({id, name, number}) => (
-    <li key={id}>
-      <div>
-        <span>{titleCase(name)}</span>
-        <span>{number}</span>
-        <button type="button" onClick={() => onDeleteContact(id)}>
-          Delete
-        </button>
-      </div>
-    </li>
-    ))}
-  </ul>
-);
-//   const list = contacts.map(({ id, name, number }) => (
-//     <li key={id}>
-//       <div>
-//         <span>{titleCase(name)}</span>
-//         <span>{number}</span>
-//         <button type="button" onClick={()=> onDeleteContact(id)}>Delete</button>
-//       </div>
-//     </li>
-//   ));
-//   return <ul>{list}</ul>;
-// };
+const ContactList = ({ contacts, onDeleteContact }) =>
+  contacts.length > 0 ? (
+    <ul>
+      {contacts.map(({ id, name, number }) => (
+        <Item key={id}>
+          <Span>
+            {titleCase(name)} {number}
+          </Span>
+          <Button type="button" onClick={() => onDeleteContact(id)}>
+            Delete
+          </Button>
+        </Item>
+      ))}
+    </ul>
+  ) : (
+    <Notification message="There no contact with such name" />
+  );
 export default ContactList;

@@ -1,8 +1,9 @@
+import { Label, Input } from "./contactForm/ContactForm_Style";
 const Filter = ({ value, changeFilter }) => {
   return (
     <>
-      <label htmlFor="filter">Find contact by name</label>
-      <input
+      <Label htmlFor="filter">Find contacts by name</Label>
+      <Input
         type="text"
         name="filter"
         title="Write down a word for searching"
