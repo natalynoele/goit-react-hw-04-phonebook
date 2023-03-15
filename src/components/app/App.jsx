@@ -1,7 +1,7 @@
 import { Component } from 'react';
 import { nanoid } from 'nanoid';
-import { titleCase } from 'components/helper';
-import initialContacts from 'components/initialContacts';
+import titleCase from 'functions/titleCase';
+import initialContacts from 'initialContacts';
 import ContactList from 'components/contactsList/ContactList';
 import Filter from 'components/Filter';
 import ContactForm from 'components/contactForm/ContactForm';
@@ -9,7 +9,7 @@ import Container from './App_Style';
 
 class App extends Component {
   state = {
-    contacts: initialContacts,    
+    contacts: initialContacts,
     filter: '',
   };
 

@@ -1,6 +1,7 @@
 import PropTypes from 'prop-types';
+import capitalizeFirstLetter from 'functions/capitalizeFirstLetter';
 const Notification = ({ message }) => {
-  return <p>{message}</p>;
+  return <p>{capitalizeFirstLetter(message)}</p>;
 };
 
 Notification.propTypes = {
