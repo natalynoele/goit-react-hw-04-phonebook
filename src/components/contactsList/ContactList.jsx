@@ -1,3 +1,4 @@
+import PropTypes from 'prop-types';
 import { titleCase } from 'components/helper';
 import Notification from 'components/Notification';
 import { Button } from 'components/contactForm/ContactForm_Style';
@@ -20,4 +21,9 @@ const ContactList = ({ contacts, onDeleteContact }) =>
   ) : (
     <Notification message="There no contact with such name" />
   );
+
+ContactList.propTypes = {
+  contacts: PropTypes.arrayOf(PropTypes.shape),
+  onDeleteContact: PropTypes.func,
+};
 export default ContactList;

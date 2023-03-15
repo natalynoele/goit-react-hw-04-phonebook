@@ -1,4 +1,5 @@
-import { Label, Input } from "./contactForm/ContactForm_Style";
+import PropTypes from 'prop-types';
+import { Label, Input } from './contactForm/ContactForm_Style';
 const Filter = ({ value, changeFilter }) => {
   return (
     <>
@@ -12,6 +13,11 @@ const Filter = ({ value, changeFilter }) => {
       />
     </>
   );
-}
+};
 
-export default Filter
+Filter.propTypes = {
+  value: PropTypes.string,
+  changeFilter: PropTypes.func,
+};
+
+export default Filter;
