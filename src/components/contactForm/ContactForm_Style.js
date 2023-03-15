@@ -15,6 +15,7 @@ const Form = styled.form`
     border: none;
     border-radius: 7px;
     color: white;
+    cursor: pointer;
 
     &:hover {
       background-color: #2681a7;
