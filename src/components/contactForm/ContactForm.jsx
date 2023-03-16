@@ -1,6 +1,8 @@
 import { Component } from 'react';
 import PropTypes from 'prop-types';
+import Button from '../button/Button';
 import { Form, Label, Input } from './ContactForm_Style';
+
 
 class ContactForm extends Component {
   state = {
@@ -45,15 +47,15 @@ class ContactForm extends Component {
           required
           onChange={this.handleChange}
         />
-        <button type="submit">Add contact</button>
+        <Button type="submit">Add contact</Button>
       </Form>
     );
   }
 }
 
-
-export default ContactForm;
 ContactForm.propTypes = {
   name: PropTypes.string,
   number: PropTypes.string,
-}
+};
+
+export default ContactForm;

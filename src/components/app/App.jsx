@@ -13,15 +13,22 @@ class App extends Component {
     filter: '',
   };
 
+  
+  localStorageKey = 'PhoneBookContacts';
+
+  // componentDidUpdate = () => {
+  //  localStorage.setItem(this.localStorageKey, JSON.stringify(initialContacts))
+  // };
+
   addContact = (name, number) => {
-    const normalizename = name.toLowerCase();
+    const normalizeName = name.toLowerCase();
     const contact = {
       id: nanoid(),
       name,
       number,
     };
     this.state.contacts.find(
-      contact => contact.name.toLowerCase() === normalizename
+      contact => contact.name.toLowerCase() === normalizeName
     )
       ? alert(`${titleCase(name)} is already in contacts`)
       : this.setState(prevState => ({

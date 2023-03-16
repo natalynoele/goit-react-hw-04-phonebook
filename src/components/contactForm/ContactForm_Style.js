@@ -6,21 +6,7 @@ const Form = styled.form`
   display: flex;
   flex-direction: column;
   border: 1px solid grey;
-  box-shadow: 1px 1px 3px 0px grey;
-
-  button {
-    padding: 10px;
-    font-size: 25px;
-    background-color: #34b4e8;
-    border: none;
-    border-radius: 7px;
-    color: white;
-    cursor: pointer;
-
-    &:hover {
-      background-color: #2681a7;
-    }
-  }
+  box-shadow: 1px 1px 3px 0px grey;  
 `;
 
 const Label = styled.label`
@@ -36,18 +22,5 @@ const Input = styled.input`
   border-radius: 7px;
 `;
 
-const Button = styled.button `
-    padding: 10px;
-    font-size: 25px;
-    cursor: pointer;
-    background-color: #34b4e8;
-    border: none;
-    border-radius: 7px;
-    color: white;
 
-    &:hover {
-      background-color: #2681a7;
-    }
-`
-
-export { Form, Label, Input, Button };
+export { Form, Label, Input };
