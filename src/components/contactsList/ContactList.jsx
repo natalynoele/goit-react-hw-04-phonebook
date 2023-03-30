@@ -1,6 +1,5 @@
 import PropTypes from 'prop-types';
 import titleCase from 'functions/titleCase';
-import Notification from 'components/Notification';
 import Button from 'components/button/Button';
 import { Span, Item } from './ContactList_Style';
 

@@ -5,7 +5,6 @@ import { nanoid } from 'nanoid';
 import titleCase from 'functions/titleCase';
 import initialContacts from 'initialContacts';
 import ContactList from 'components/contactsList/ContactList';
-import Notification from 'components/Notification';
 import Filter from 'components/Filter';
 import ContactForm from 'components/contactForm/ContactForm';
 import Container from './App_Style';
