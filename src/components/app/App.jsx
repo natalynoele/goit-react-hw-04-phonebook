@@ -11,7 +11,6 @@ import Container from './App_Style';
 
 const App = () => {
   const localStorageKey = 'PhoneBookContacts';
-  const [showInfo, setShowInfo] = useState(false);
   const [filterValue, setFilterValue] = useState('');
   const [contacts, setContacts] = useState(() => {
     const localData = localStorage.getItem(localStorageKey);
@@ -56,11 +55,7 @@ const App = () => {
       <h1>Phonebook</h1>
       <ContactForm onSubmit={addContact} />
       <h2>Contacts</h2>
-      <Filter
-        value={normalizeFilter}
-        changeFilter={handleFilter}
-        isContacts={showInfo.status}
-      />
+      <Filter value={normalizeFilter} changeFilter={handleFilter} />
       <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
       <ToastContainer />
     </Container>
