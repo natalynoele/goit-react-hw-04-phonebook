@@ -6,7 +6,7 @@ import { Span, Item } from './ContactList_Style';
 
 const ContactList = ({ contacts, onDeleteContact }) => {
   
-  return contacts.length > 0 ? (
+  return (contacts.length > 0 && 
     <ul>
       {contacts.map(({ id, name, number }) => (
         <Item key={id}>
@@ -19,9 +19,7 @@ const ContactList = ({ contacts, onDeleteContact }) => {
         </Item>
       ))}
     </ul>
-  ) : (
-    <Notification message="There no contact with such name" />
-  );
+  )
 }  
 
 

@@ -1,71 +1,71 @@
-import { Component } from 'react';
+import { useEffect, useState } from 'react';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 import { nanoid } from 'nanoid';
 import titleCase from 'functions/titleCase';
 import initialContacts from 'initialContacts';
 import ContactList from 'components/contactsList/ContactList';
+import Notification from 'components/Notification';
 import Filter from 'components/Filter';
 import ContactForm from 'components/contactForm/ContactForm';
 import Container from './App_Style';
 
-class App extends Component {
-  state = {
-    contacts: initialContacts,
-    filter: '',
-  };
+const App = () => {
+  const localStorageKey = 'PhoneBookContacts';
+  const [showInfo, setShowInfo] = useState(false);
+  const [filterValue, setFilterValue] = useState('');
+  const [contacts, setContacts] = useState(() => {
+    const localData = localStorage.getItem(localStorageKey);
+    return localData ? JSON.parse(localData) : [];
+  });
 
-  
-  localStorageKey = 'PhoneBookContacts';
+  const normalizeFilter = filterValue.toLowerCase();
+  const visibleContacts = contacts.filter(contact =>
+    contact.name.toLowerCase().includes(normalizeFilter)
+  );
+  useEffect(() => {
+    if (localStorage.getItem(localStorageKey) === null) {
+      localStorage.setItem(localStorageKey, JSON.stringify(initialContacts));
+    }
+  });
 
-  // componentDidUpdate = () => {
-  //  localStorage.setItem(this.localStorageKey, JSON.stringify(initialContacts))
-  // };
-
-  addContact = (name, number) => {
+  const addContact = (name, number) => {
     const normalizeName = name.toLowerCase();
     const contact = {
       id: nanoid(),
       name,
       number,
     };
-    this.state.contacts.find(
-      contact => contact.name.toLowerCase() === normalizeName
-    )
-      ? alert(`${titleCase(name)} is already in contacts`)
-      : this.setState(prevState => ({
-          ...prevState,
-          contacts: [contact, ...prevState.contacts],
-        }));
+    contacts.find(contact => contact.name.toLowerCase() === normalizeName)
+      ? toast.error(`${titleCase(name)} is already in contacts`)
+      : setContacts(prevContacts => [contact, ...prevContacts]);
   };
 
-  deleteContact = contactId => {
-    this.setState(prevState => ({
-      contacts: prevState.contacts.filter(contact => contact.id !== contactId),
-    }));
+  const deleteContact = contactId => {
+    setContacts(contacts.filter(contact => contact.id !== contactId));
   };
 
-  handleFilter = ({ target }) => {
-    this.setState(prevState => ({ ...prevState, filter: target.value }));
+  const handleFilter = ({ target }) => {
+    if (visibleContacts.length === 0) {
+      return toast.info('There are no contacts yet');
+    }
+    setFilterValue(target.value);
   };
 
-  render() {
-    const { contacts, filter } = this.state;
-    const normalizeFilter = filter.toLowerCase();
-    const visibleContacts = contacts.filter(contact =>
-      contact.name.toLowerCase().includes(normalizeFilter)
-    );
-    return (
-      <Container>
-        <h1>Phonebook</h1>
-        <ContactForm onSubmit={this.addContact} />
-        <h2>Contacts</h2>
-        <Filter value={normalizeFilter} changeFilter={this.handleFilter} />
-        <ContactList
-          contacts={visibleContacts}
-          onDeleteContact={this.deleteContact}
-        />
-      </Container>
-    );
-  }
-}
+  return (
+    <Container>
+      <h1>Phonebook</h1>
+      <ContactForm onSubmit={addContact} />
+      <h2>Contacts</h2>
+      <Filter
+        value={normalizeFilter}
+        changeFilter={handleFilter}
+        isContacts={showInfo.status}
+      />
+      <ContactList contacts={visibleContacts} onDeleteContact={deleteContact} />
+      <ToastContainer />
+    </Container>
+  );
+};
 
 export default App;
