@@ -44,8 +44,11 @@ const App = () => {
   };
 
   const handleFilter = ({ target }) => {
+    if (contacts.length === 0) {      
+      return toast.error('There are no contacts yet. Please add the contacts');
+    };
     if (visibleContacts.length === 0) {
-      return toast.info('There are no contacts yet');
+      toast.info('There is no contact with a such name');
     }
     setFilterValue(target.value);
   };
